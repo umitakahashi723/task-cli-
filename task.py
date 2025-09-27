@@ -5,7 +5,14 @@ from datetime import datetime
 FILE = "tasks.json"
 
 def load_tasks():
-    return json.load(open(FILE)) if os.path.exists(FILE) else []
+    if not os.path.exists(FILE):
+        return []
+    tasks = json.load(open(FILE))
+    # 给老任务补默认值
+    for t in tasks:
+        t.setdefault("priority", "medium")
+        t.setdefault("time", "unknown")
+    return tasks
 
 def save_tasks(tasks):
     json.dump(tasks, open(FILE, "w"), indent=2, ensure_ascii=False)
@@ -24,17 +31,25 @@ def main():
     tasks = load_tasks()
 
     if cmd == "add":
-        title = " ".join(args)
-        tasks.append({"id": len(tasks)+1, "title": title, "done": False, "time": str(datetime.now())[:16]})
+        title, priority = " ".join(args), "medium"
+        if "-p" in args:
+            idx = args.index("-p")
+            priority = args[idx+1]
+            title = " ".join(args[:idx])
+        tasks.append({"id": len(tasks)+1, "title": title,
+                      "done": False, "priority": priority,
+                      "time": str(datetime.now())[:16]})
         save_tasks(tasks)
-        print(color(f"Addedd: {title}", "green"))
+        print(color(f"Added: {title} [{priority}]", "green"))
 
     elif cmd == "list":
+        prio_color = {"high": "red", "medium": "yellow", "low": "blue"}
         if not tasks:
             print(color("No tasks yet.", "yellow"))
         for t in tasks:
             status = color("✓", "green") if t["done"] else color("✗", "red")
-            print(f"{t['id']:>2}. {status}  {t['title']}  {color(t['time'], 'blue')}")
+            p_color = prio_color.get(t["priority"], "white")
+            print(f"{t['id']:>2}. {status}  {color(t['priority'], p_color)}  {t['title']}  {color(t['time'], 'blue')}")
 
     elif cmd == "done":
         tid = int(args[0])
