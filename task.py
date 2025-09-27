@@ -27,7 +27,7 @@ def main():
         title = " ".join(args)
         tasks.append({"id": len(tasks)+1, "title": title, "done": False, "time": str(datetime.now())[:16]})
         save_tasks(tasks)
-        print(color(f"Addedd: {title}", "green"))
+        print(color(f"Added: {title}", "green"))
 
     elif cmd == "list":
         if not tasks:
