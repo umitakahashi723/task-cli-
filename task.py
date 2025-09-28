@@ -21,13 +21,11 @@ def color(text, c):
     colors = {"red": 31, "green": 32, "yellow": 33, "blue": 34}
     return f"\033[{colors[c]}m{text}\033[0m"
 
-def main():
-    if len(sys.argv) == 1:
-        print(color("Usage: task <command> [args]", "yellow"))
-        print("Commands: add, list, done <id>, delete <id>, clear")
-        return
+def main(argv=None):
+    if argv is None:
+        argv = sys.argv[1:]
 
-    cmd, *args = sys.argv[1:]
+    cmd, *args = argv
     tasks = load_tasks()
 
     if cmd == "add":
