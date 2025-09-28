@@ -60,12 +60,18 @@ def main(argv=None):
     elif cmd == "delete":
         tid = int(args[0])
         tasks = [t for t in tasks if t["id"] != tid]
+        # 重新生成 id
+        for i, t in enumerate(tasks, start=1):
+            t["id"] = i
         save_tasks(tasks)
         print(color(f"Task {tid} deleted.", "red"))
 
+
     elif cmd == "clear":
-        save_tasks([])
+        tasks = []
+        save_tasks(tasks)
         print(color("All tasks cleared.", "yellow"))
+
 
     else:
         print(color("Unknown command.", "red"))
