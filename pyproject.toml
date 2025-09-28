@@ -3,13 +3,16 @@ requires = ["setuptools>=61", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "task-cli-umitakahashi723"   # PyPI 唯一名，加学号/昵称防冲突
+name = "task-cli-umitakahashi723"
 version = "1.0.0"
 description = "个人任务管理命令行工具"
 readme = "README.md"
 requires-python = ">=3.8"
-dependencies = []                 # 无第三方依赖
-py-modules = ["task"]   # ← 只打包 task.py，排除 test_task
+dependencies = []
 
 [project.scripts]
-task = "task:main"                # 安装后生成 `task` 命令
+task = "task:main"
+
+[tool.setuptools]
+py-modules = ["task"]   # ← 只打包 task.py，排除 test_task
+
