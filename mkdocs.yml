@@ -5,16 +5,12 @@ repo_url: https://github.com/umitakahashi723/task-cli-
 site_author: 你的名字
 theme:
   name: material
-  custom_dir: docs/theme
   palette:
     primary: blue
     accent: orange
   font:
     text: 'Roboto'
     code: 'Monospace'
-  logo: images/logo.png
-  icon:
-    favicon: images/favicon.png
   features:
     - navigation.tabs
     - navigation.expand
@@ -22,7 +18,7 @@ theme:
   direction: ltr
   content_overlap: true
   navigation_depth: 2
-doc_dir: docs
+docs_dir: docs
 site_dir: site
 nav:
   - 首页: index.md
